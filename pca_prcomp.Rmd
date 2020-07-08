@@ -1,9 +1,8 @@
----
-title: "PCA"
-author: "Srilatha Chauah"
-date: "July 8, 2020"
-output: pca plot
----
+#' title: "PCA"
+#' author: "Srilatha Chauah"
+#' date: "July 8, 2020"
+#' output: PDF file
+
 #' runPCA is used for clustering multiple comparisons efficiently
 
 #' The package used is prcomp
@@ -17,8 +16,13 @@ output: pca plot
 #' Data 3 - saved as sdf, is the sample metatable, contains 2 columns, such as the sample ID's (all the column names from 'ndf' except for the 1st column are used as the row values here) and the treatment groups corresponding to that sample ID's
 
 #' 'ndf' is used as a parameter for calling runPCA
+#' Example - runPCA(ndf)
 
 #' Note: Data matrix file should not contain rows (sample ID's) with all zeros in it (might lead to an error while calculating standard deviation)
+
+#' @import ggpubr
+#' @import mixOmics
+#' @import readxl
 
 ```{r}
 runPCA <- function(ndf,showlabel = F) {
@@ -53,9 +57,5 @@ runPCA <- function(ndf,showlabel = F) {
   
   ggexport(g, filename = "pcaplot.pdf",width = 15, height = 12)
 }
-```
-
-```{r}
-runPCA(ndf)
 ```
 
