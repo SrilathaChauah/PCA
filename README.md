@@ -1,2 +1,1 @@
-# PCA
-using prcomp package
+
