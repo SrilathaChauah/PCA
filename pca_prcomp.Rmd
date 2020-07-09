@@ -9,14 +9,14 @@
 
 #' The function takes three files as inputs
 
-#' Data 1 - saved as ndf, is the data matrix file, contains gene symbols or ID's along with the expression data as sample1, sample2, .., sampleN in corresponding columns
+#' Data 1 - saved as data_matrix file, contains gene symbols or ID's along with the expression data as sample1, sample2, .., sampleN in corresponding columns
 
-#' Data 2 - saved as cdf, is the data dictionary file, contains only gene symbols or ID's (typically the 1st column from 'ndf' with same column name)
+#' Data 2 - saved sample_metadata, contains 2 columns, such as the sample ID's (all the column names from 'data_matrix' except for the 1st column are used as the row values here) and the treatment groups corresponding to that sample ID's
 
-#' Data 3 - saved as sdf, is the sample metatable, contains 2 columns, such as the sample ID's (all the column names from 'ndf' except for the 1st column are used as the row values here) and the treatment groups corresponding to that sample ID's
+#' Data 3 (optional) - saved as data_dictionary file, contains only gene symbols or ID's (typically the 1st column from 'data_matrix' with same column name)
 
-#' 'ndf' is used as a parameter for calling runPCA
-#' Example - runPCA(ndf)
+#' 'data_matrix' is used as the parameter for runPCA function
+#' Example - runPCA(data_matrix)
 
 #' Note: Data matrix file should not contain rows (sample ID's) with all zeros in it (might lead to an error while calculating standard deviation)
 
@@ -25,15 +25,15 @@
 #' @import readxl
 
 ```{r}
-runPCA <- function(ndf,showlabel = F) {
-  pcamat <- do.call("cbind",lapply(ndf[,-1],as.numeric))
+runPCA <- function(data_matrix,showlabel = F) {
+  pcamat <- do.call("cbind",lapply(data_matrix[,-1],as.numeric))
   pcamat[which(is.na(pcamat)==TRUE)] <- min(pcamat[which(is.na(pcamat)==FALSE)])
-  pcamat <- pcamat[-which(apply(ndf, 1, sd)==0),]
+  pcamat <- pcamat[-which(apply(data_matrix, 1, sd)==0),]
   pcamat <- pcamat[!(apply(pcamat, 1, function(y) any(y == 0))),]
   pca.res <- prcomp(t(pcamat), scale = T)
   pca.res.sum <- summary(pca.res)
   
-  df1 <- cbind(pca.res$x[,1:2],sdf)
+  df1 <- cbind(pca.res$x[,1:2],sample_metadata)
   df1[,4] <- as.factor(df1[,4])
   
   x_label <- paste0("PC1 (",round(pca.res.sum$importance[2,1]*100,1),"%)")
