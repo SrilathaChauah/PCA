@@ -9,11 +9,11 @@
 
 #' The function takes three files as inputs
 
-#' Data 1 - saved as data_matrix file, contains gene symbols or ID's along with the expression data as sample1, sample2, .., sampleN in corresponding columns
+#' Data 1 - saved as data_matrix, contains gene symbols or ID's along with the expression data as sample1, sample2, .., sampleN in corresponding columns
 
 #' Data 2 - saved sample_metadata, contains 2 columns, such as the sample ID's (all the column names from 'data_matrix' except for the 1st column are used as the row values here) and the treatment groups corresponding to that sample ID's
 
-#' Data 3 (optional) - saved as data_dictionary file, contains only gene symbols or ID's (typically the 1st column from 'data_matrix' with same column name)
+#' Data 3 (optional) - saved as data_dictionary, contains only gene symbols or ID's (typically the 1st column from 'data_matrix' with same column name)
 
 #' 'data_matrix' is used as the parameter for runPCA function
 #' Example - runPCA(data_matrix)
